@@ -97,12 +97,18 @@
       display: inline-block;
     }
 
+    /* Enhanced cursor: exactly after the text, blinking */
+    .typewriter-wrapper {
+      display: inline-block;
+      position: relative;
+    }
     .cursor {
       display: inline-block;
       width: 3px;
       background-color: var(--accent);
       margin-left: 4px;
       animation: blink 0.8s infinite;
+      vertical-align: middle;
     }
 
     @keyframes blink {
@@ -117,6 +123,21 @@
       opacity: 0;
       animation: fadeInUp 0.8s forwards;
       animation-delay: 1.4s;
+      /* Improved readability: slightly softer but still visible in both themes */
+      text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      background: transparent;
+      font-weight: 500;
+    }
+    /* Light mode adjustments for subtitle */
+    body.light .subtitle {
+      color: #1e2a3e;
+      text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+      font-weight: 500;
+    }
+    /* Dark mode readability */
+    body:not(.light) .subtitle {
+      color: #d1d5f0;
+      font-weight: 400;
     }
 
     @keyframes fadeInUp {
@@ -138,43 +159,93 @@
       justify-content: center;
     }
 
+    /* Image container with gentle zoom animation + soft glow, no blur issues */
     .intro-img {
       flex: 1;
       min-width: 240px;
       opacity: 0;
       transform: translateX(-40px);
-      filter: blur(10px);
       transition: all 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      filter: none; /* No blur at all */
+      position: relative;
+      border-radius: 2rem;
     }
 
     .intro-img.visible-animate {
       opacity: 1;
       transform: translateX(0);
-      filter: blur(0px);
     }
 
+    /* image wrapper to control glow + gentle infinite zoom in/out */
+    .img-glow-wrapper {
+      position: relative;
+      border-radius: 2rem;
+      padding: 6px;
+      background: radial-gradient(circle at 30% 20%, rgba(59,130,246,0.25), rgba(59,130,246,0.05));
+      transition: all 0.4s ease;
+    }
     .intro-img img {
       width: 100%;
       max-width: 280px;
-      border-radius: 2rem;
+      border-radius: 1.8rem;
       box-shadow: var(--shadow);
       border: 2px solid var(--border-light);
       object-fit: cover;
       aspect-ratio: 1 / 1;
+      display: block;
+      margin: 0 auto;
+      transition: transform 1.2s ease-in-out, box-shadow 0.4s ease;
+      animation: gentleZoom 5s infinite alternate ease-in-out;
+      transform-origin: center;
+    }
+    /* Gentle zoom keyframes: slight zoom in/out without any blur */
+    @keyframes gentleZoom {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.04);
+      }
+    }
+    /* Soft light around image based on theme */
+    .intro-img .img-glow-wrapper {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      max-width: 292px;
+      margin: 0 auto;
+    }
+    .img-glow-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      background: radial-gradient(circle, rgba(59,130,246,0.35), transparent 70%);
+      border-radius: 2rem;
+      opacity: 0.7;
+      z-index: -1;
+      transition: opacity 0.3s;
+    }
+    body.light .img-glow-wrapper::before {
+      background: radial-gradient(circle, rgba(59,130,246,0.5), rgba(59,130,246,0.15));
+      opacity: 0.85;
+    }
+    /* extra hover effect fine */
+    .intro-img:hover img {
+      animation-play-state: paused;
+      transform: scale(1.02);
+      transition: transform 0.4s ease;
     }
 
     .intro-text {
       flex: 1.5;
       opacity: 0;
       transform: translateX(40px);
-      filter: blur(10px);
       transition: all 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      filter: none; /* no blur */
     }
-
     .intro-text.visible-animate {
       opacity: 1;
       transform: translateX(0);
-      filter: blur(0px);
     }
 
     .intro-text p {
@@ -343,7 +414,6 @@
       50% { transform: translateY(-3px); }
     }
 
-    /* Social Links - Fixed with proper hover colors */
     .social-floating {
       position: fixed;
       left: 24px;
@@ -374,7 +444,6 @@
       text-decoration: none;
     }
 
-    /* Individual hover colors for each social link */
     .social-floating a[data-social="facebook"]:hover {
       background: #1877f2;
       color: white;
@@ -620,14 +689,16 @@
 
   <main>
     <div class="hero container">
-      <h1><span id="typed-text"></span><span class="cursor">|</span></h1>
+      <h1><span id="typed-container"><span id="typed-text"></span><span class="cursor">|</span></span></h1>
       <div class="subtitle">Turning Ideas into Digital Reality</div>
     </div>
 
     <section id="introSection" class="container">
       <div class="intro-row">
         <div class="intro-img" id="introImg">
-          <img src="sabbir-pic.jpg" alt="Sabbir Ahmed" width="200" style="width: 100%; max-width: 240px; height: auto;">
+          <div class="img-glow-wrapper">
+            <img src="sabbir-pic.jpg" alt="Sabbir Ahmed" style="width: 100%; max-width: 280px; height: auto;">
+          </div>
         </div>
         <div class="intro-text" id="introText">
           <h2>📖 Introduction</h2>
@@ -690,7 +761,7 @@
 
   <script>
     (function() {
-      // Typing animation
+      // Typing animation - cursor remains exactly at the end after text finishes
       const headlineText = "Welcome to MD. Sabbir Ahmed's Portfolio";
       const typedSpan = document.getElementById('typed-text');
       let idx = 0;
@@ -699,7 +770,8 @@
           typedSpan.textContent += headlineText.charAt(idx);
           idx++;
           setTimeout(typeWriter, 70);
-        }
+        } 
+        // When done, cursor remains blinking as it is already in DOM
       }
       typeWriter();
 
@@ -725,25 +797,17 @@
         else setTheme('light');
       });
 
-      // Animations Observer
+      // Animations Observer (no blur transitions)
       const sections = document.querySelectorAll('section');
       const introImg = document.getElementById('introImg');
       const introText = document.getElementById('introText');
       const timelineItems = document.querySelectorAll('.timeline-item');
       const skillCards = document.querySelectorAll('.skill-card');
 
-      function applyBlur(visibleIndex) {
-        Array.from(sections).forEach((sec, i) => {
-          sec.style.transition = 'filter 0.3s';
-          sec.style.filter = i < visibleIndex ? 'blur(3px)' : 'blur(0px)';
-        });
-      }
       const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            const idx = Array.from(sections).indexOf(entry.target);
-            if (idx !== -1) applyBlur(idx);
           }
         });
       }, { threshold: 0.3 });
@@ -784,12 +848,10 @@
         window.open('https://mdsabbirahmed7510.github.io/My-projects', '_blank');
       });
 
-      // ========== GMAIL FUNCTION - DIRECT AND WORKING ==========
+      // Gmail Function
       function openGmail() {
         window.open('https://mail.google.com/mail/?view=cm&fs=1&to=sabbir2682005@gmail.com', '_blank');
       }
-
-      // Gmail button in sidebar
       const gmailSocialBtn = document.getElementById('gmailSocialBtn');
       if (gmailSocialBtn) {
         gmailSocialBtn.addEventListener('click', function(e) {
@@ -797,8 +859,6 @@
           openGmail();
         });
       }
-
-      // Bottom email link
       const bottomEmailLink = document.getElementById('bottomEmailLink');
       if (bottomEmailLink) {
         bottomEmailLink.addEventListener('click', function(e) {
@@ -807,7 +867,7 @@
         });
       }
 
-      // ========== CV DOWNLOAD ==========
+      // CV Download
       const topDownloadBtn = document.getElementById('topDownloadCvBtn');
       const modal = document.getElementById('cvModal');
       const confirmBtn = document.getElementById('confirmDownloadBtn');
@@ -822,7 +882,6 @@
         link.click();
         document.body.removeChild(link);
         clickCount++;
-        console.log(`[CV Download] Click #${clickCount}`);
         showToast();
       }
 
@@ -868,14 +927,6 @@
       modal?.addEventListener('click', (e) => {
         if (e.target === modal) modal.classList.remove('active');
       });
-
-      // Background update
-      function updateBgStyles() {
-        document.body.style.background = body.classList.contains('light') ? '#f5f7fe' : '#0a0a14';
-      }
-      const themeObserver = new MutationObserver(updateBgStyles);
-      themeObserver.observe(body, { attributes: true, attributeFilter: ['class'] });
-      updateBgStyles();
 
       // Image fallback
       const profileImg = document.querySelector('.intro-img img');
