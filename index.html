@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>MD. Sabbir Ahmed | Portfolio</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <!-- Font Awesome 6 -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -24,7 +22,6 @@
       overflow-x: hidden;
     }
 
-    /* ========== THEME VARIABLES ========== */
     :root {
       --bg-primary: #0a0a14;
       --bg-secondary: #11111f;
@@ -36,6 +33,12 @@
       --border-light: rgba(255,255,255,0.08);
       --shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
       --skill-glow: rgba(59,130,246,0.2);
+      --modal-bg: rgba(0,0,0,0.8);
+      --fb-color: #1877f2;
+      --insta-color: #e4405f;
+      --linkedin-color: #0a66c2;
+      --github-color: #333;
+      --gmail-color: #ea4335;
     }
 
     body.light {
@@ -47,6 +50,8 @@
       --border-light: rgba(0,0,0,0.08);
       --shadow: 0 15px 30px -10px rgba(0,0,0,0.1);
       --skill-glow: rgba(59,130,246,0.15);
+      --modal-bg: rgba(0,0,0,0.7);
+      --github-color: #24292f;
     }
 
     .container {
@@ -67,9 +72,8 @@
       transform: translateY(0);
     }
 
-    /* ====== HERO SECTION ====== */
     .hero {
-      min-height: 90vh;
+      min-height: 85vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -126,7 +130,6 @@
       }
     }
 
-    /* intro row */
     .intro-row {
       display: flex;
       flex-wrap: wrap;
@@ -180,7 +183,6 @@
       color: var(--text-secondary);
     }
 
-    /* timeline education */
     .timeline {
       position: relative;
       padding-left: 2rem;
@@ -225,8 +227,6 @@
       color: var(--text-secondary);
     }
 
-    /* ========== SKILLS SECTION ========== */
-    /* Grid: maximum 2 items per row */
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(220px, 280px));
@@ -249,23 +249,13 @@
       opacity: 0;
       transform: translateY(30px);
       letter-spacing: 0.3px;
-      box-shadow: 0 0 6px var(--skill-glow);
-      position: relative;
-      backdrop-filter: blur(4px);
+      box-shadow: 0 0 8px rgba(59,130,246,0.2);
     }
 
-    /* soft light glow effect on border */
-    .skill-card {
-      box-shadow: 0 0 8px rgba(59,130,246,0.2), 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    /* Hover: pop up & stronger soft light */
     .skill-card:hover {
       transform: translateY(-6px) scale(1.02);
       box-shadow: 0 12px 22px -10px var(--accent-glow), 0 0 14px rgba(59,130,246,0.5);
       border-color: var(--accent);
-      background: var(--card-bg);
-      transition: all 0.2s ease;
     }
 
     .skill-card.visible-skill {
@@ -273,7 +263,6 @@
       transform: translateY(0);
     }
 
-    /* responsive: on smaller screens, still max 2 cols but adjust width */
     @media (max-width: 560px) {
       .skills-grid {
         grid-template-columns: 1fr;
@@ -286,22 +275,24 @@
       }
     }
 
-    /* project button */
-    .project-wrapper {
-      text-align: center;
-      margin: 2.5rem 0;
+    .buttons-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 2rem 0 1rem;
     }
 
     .glow-btn {
       background: linear-gradient(135deg, var(--accent), #2563eb);
       border: none;
-      padding: 1rem 2.5rem;
-      font-size: 1.2rem;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: white;
       border-radius: 60px;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.3s;
+      transition: all 0.25s ease;
       box-shadow: 0 0 8px rgba(59,130,246,0.3);
       display: inline-flex;
       align-items: center;
@@ -313,7 +304,46 @@
       box-shadow: 0 0 22px var(--accent-glow);
     }
 
-    /* floating socials left */
+    .top-cv-button {
+      position: fixed;
+      top: 24px;
+      right: 110px;
+      z-index: 210;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: none;
+      padding: 0.7rem 1.4rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: white;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 0 10px rgba(16,185,129,0.4);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      backdrop-filter: blur(4px);
+    }
+
+    .top-cv-button i {
+      transition: transform 0.3s ease;
+    }
+
+    .top-cv-button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(16,185,129,0.6);
+    }
+
+    .top-cv-button:hover i {
+      animation: bounceIcon 0.5s ease;
+    }
+
+    @keyframes bounceIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
+    }
+
+    /* Social Links - Fixed with proper hover colors */
     .social-floating {
       position: fixed;
       left: 24px;
@@ -344,10 +374,31 @@
       text-decoration: none;
     }
 
-    .social-floating a:hover {
-      transform: scale(1.2);
-      background: var(--accent);
+    /* Individual hover colors for each social link */
+    .social-floating a[data-social="facebook"]:hover {
+      background: #1877f2;
       color: white;
+      transform: scale(1.2);
+    }
+    .social-floating a[data-social="instagram"]:hover {
+      background: #e4405f;
+      color: white;
+      transform: scale(1.2);
+    }
+    .social-floating a[data-social="linkedin"]:hover {
+      background: #0a66c2;
+      color: white;
+      transform: scale(1.2);
+    }
+    .social-floating a[data-social="github"]:hover {
+      background: #24292f;
+      color: white;
+      transform: scale(1.2);
+    }
+    .social-floating a[data-social="gmail"]:hover {
+      background: #ea4335;
+      color: white;
+      transform: scale(1.2);
     }
 
     @keyframes slideFadeLeft {
@@ -361,7 +412,6 @@
       }
     }
 
-    /* theme toggle (sun/moon only) */
     .theme-toggle {
       position: fixed;
       top: 24px;
@@ -384,30 +434,119 @@
       color: var(--text-primary);
     }
 
-    /* email bottom */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--modal-bg);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.2s, opacity 0.2s ease;
+    }
+    .modal-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .modal-container {
+      background: var(--bg-secondary);
+      border-radius: 1.5rem;
+      width: 90%;
+      max-width: 500px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-light);
+      text-align: center;
+      animation: modalPop 0.3s ease;
+    }
+    @keyframes modalPop {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    .modal-container h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+    .modal-container p {
+      margin: 1rem 0;
+      color: var(--text-secondary);
+    }
+    .pdf-preview {
+      width: 100%;
+      height: 200px;
+      background: var(--card-bg);
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.8rem;
+      border: 2px dashed var(--accent);
+      margin: 1rem 0;
+    }
+    .pdf-preview i {
+      font-size: 3rem;
+      color: var(--accent);
+    }
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+    .modal-buttons button {
+      padding: 0.7rem 1.5rem;
+      border-radius: 40px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .confirm-download {
+      background: var(--accent);
+      color: white;
+    }
+    .cancel-download {
+      background: var(--card-bg);
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+    }
+    .confirm-download:hover {
+      transform: scale(1.02);
+      filter: brightness(1.05);
+    }
+
     .email-bottom {
       text-align: center;
       margin: 2rem 0 1rem;
       font-size: 0.95rem;
     }
-
     .email-bottom a {
       color: var(--accent);
       text-decoration: none;
     }
-
     hr {
       border-color: var(--border-light);
       margin: 1rem 0;
     }
-
     footer {
       text-align: center;
       padding: 1.5rem;
       font-size: 0.8rem;
     }
 
-    /* responsive: social links move to bottom */
     @media (max-width: 768px) {
       .social-floating {
         position: static;
@@ -434,18 +573,21 @@
         right: 16px;
         padding: 0.5rem 0.8rem;
       }
+      .top-cv-button {
+        top: 16px;
+        right: 80px;
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+      }
       section {
         margin: 3rem 0;
       }
+      .buttons-row {
+        flex-direction: column;
+        align-items: center;
+      }
     }
 
-    /* previous section blur effect */
-    .section-blur-prev {
-      filter: blur(3px);
-      transition: filter 0.2s ease;
-    }
-
-    /* heading style */
     h2 {
       font-size: 2rem;
       margin-bottom: 1rem;
@@ -457,38 +599,34 @@
       align-items: center;
       gap: 10px;
     }
-
-    .timeline-content strong {
-      color: var(--text-primary);
-    }
   </style>
 </head>
 <body>
+  <button class="top-cv-button" id="topDownloadCvBtn">
+    <i class="fas fa-download"></i> Download CV
+  </button>
+
   <div class="theme-toggle" id="themeToggle">
     <i class="fas fa-sun"></i>
   </div>
 
-  <!-- Floating Social Links (left side) -->
   <div class="social-floating" id="socialSidebar">
-    <a href="https://www.facebook.com/mdsabbirahmed.7510" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-    <a href="https://www.instagram.com/mdsabbirahmed.7510" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-    <a href="https://www.linkedin.com/in/mdsabbirahmed7510" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-    <a href="https://github.com/mdsabbirahmed7510" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-    <a href="mailto:sabbir2682005@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    <a href="https://www.facebook.com/mdsabbirahmed.7510" target="_blank" data-social="facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.instagram.com/mdsabbirahmed.7510" target="_blank" data-social="instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.linkedin.com/in/mdsabbirahmed7510" target="_blank" data-social="linkedin"><i class="fab fa-linkedin-in"></i></a>
+    <a href="https://github.com/mdsabbirahmed7510" target="_blank" data-social="github"><i class="fab fa-github"></i></a>
+    <a href="#" id="gmailSocialBtn" data-social="gmail"><i class="fas fa-envelope"></i></a>
   </div>
 
   <main>
-    <!-- Hero Section -->
     <div class="hero container">
       <h1><span id="typed-text"></span><span class="cursor">|</span></h1>
-      <div class="subtitle">✨ Believe in Myself ✨</div>
+      <div class="subtitle">Turning Ideas into Digital Reality</div>
     </div>
 
-    <!-- Introduction Section (using requested sabbir-pic.jpg) -->
     <section id="introSection" class="container">
       <div class="intro-row">
         <div class="intro-img" id="introImg">
-          <!-- using exactly: sabbir-pic.jpg with width 200 attribute as requested, but keeping responsive -->
           <img src="sabbir-pic.jpg" alt="Sabbir Ahmed" width="200" style="width: 100%; max-width: 240px; height: auto;">
         </div>
         <div class="intro-text" id="introText">
@@ -498,86 +636,77 @@
       </div>
     </section>
 
-    <!-- Education Section - clean timeline without extra badges -->
     <section id="educationSection" class="container">
       <h2>🎓 Education Journey</h2>
       <div class="timeline">
-        <div class="timeline-item" data-delay="0">
-          <div class="year">2022</div>
-          <div class="timeline-content">
-            <strong>Secondary School Certificate (SSC)</strong>
-            <div class="institution">Mirpur Cantonment Public School & College | Science</div>
-          </div>
-        </div>
-        <div class="timeline-item" data-delay="1">
-          <div class="year">2024</div>
-          <div class="timeline-content">
-            <strong>Higher Secondary Certificate (HSC)</strong>
-            <div class="institution">Adamjee Cantonment College | Science</div>
-          </div>
-        </div>
-        <div class="timeline-item" data-delay="2">
-          <div class="year">Current</div>
-          <div class="timeline-content">
-            <strong>B.Sc in Computer Science & Engineering (CSE)</strong>
-            <div class="institution">Daffodil International University</div>
-          </div>
-        </div>
+        <div class="timeline-item"><div class="year">2022</div><div class="timeline-content"><strong>Secondary School Certificate (SSC)</strong><div class="institution">Mirpur Cantonment Public School & College | Science</div></div></div>
+        <div class="timeline-item"><div class="year">2024</div><div class="timeline-content"><strong>Higher Secondary Certificate (HSC)</strong><div class="institution">Adamjee Cantonment College | Science</div></div></div>
+        <div class="timeline-item"><div class="year">Current</div><div class="timeline-content"><strong>B.Sc in Computer Science & Engineering (CSE)</strong><div class="institution">Daffodil International University</div></div></div>
       </div>
     </section>
 
-    <!-- Skills Section: max 2 items per row, soft light + pop-up on hover -->
     <section id="skillsSection" class="container">
       <h2>⚙️ Skills</h2>
       <div class="skills-grid">
-        <div class="skill-card" data-skill>HTML</div>
-        <div class="skill-card" data-skill>CSS</div>
-        <div class="skill-card" data-skill>JavaScript</div>
-        <div class="skill-card" data-skill>Photo Editing</div>
-        <div class="skill-card" data-skill>Video Editing</div>
+        <div class="skill-card">HTML</div>
+        <div class="skill-card">CSS</div>
+        <div class="skill-card">JavaScript</div>
+        <div class="skill-card">Photo Editing</div>
+        <div class="skill-card">Video Editing</div>
       </div>
     </section>
 
-    <!-- Projects Section with button -->
     <section id="projectsSection" class="container">
       <h2>🚀 Featured Work</h2>
-      <div class="project-wrapper">
+      <div class="buttons-row">
         <button class="glow-btn" id="projectBtn">
           <i class="fas fa-external-link-alt"></i> My University Projects
         </button>
       </div>
     </section>
 
-    <!-- Email contact bottom -->
     <div class="container email-bottom">
-      <i class="fas fa-envelope"></i> Let's connect: <a href="mailto:sabbir2682005@gmail.com">sabbir2682005@gmail.com</a>
+      <i class="fas fa-envelope"></i> Let's connect: 
+      <a href="#" id="bottomEmailLink">sabbir2682005@gmail.com</a>
     </div>
-    <footer>
-      <hr>
-      <p>© 2025 MD. Sabbir Ahmed — Portfolio | Cinematic vibe</p>
-    </footer>
+    <footer><hr><p>© 2025 MD. Sabbir Ahmed — Portfolio | Cinematic vibe</p></footer>
   </main>
+
+  <div class="modal-overlay" id="cvModal">
+    <div class="modal-container">
+      <h3><i class="fas fa-file-pdf"></i> CV Preview</h3>
+      <p>You are about to download <strong>CV-Sabbir-Ahmed.pdf</strong></p>
+      <div class="pdf-preview">
+        <i class="fas fa-file-pdf" style="font-size: 3rem;"></i>
+        <span>📄 Sabbir Ahmed - Resume</span>
+        <small style="color: var(--text-secondary)">Size: ~245 KB</small>
+      </div>
+      <div class="modal-buttons">
+        <button class="confirm-download" id="confirmDownloadBtn"><i class="fas fa-check"></i> Confirm Download</button>
+        <button class="cancel-download" id="cancelDownloadBtn"><i class="fas fa-times"></i> Cancel</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     (function() {
-      // TYPING ANIMATION
+      // Typing animation
       const headlineText = "Welcome to MD. Sabbir Ahmed's Portfolio";
       const typedSpan = document.getElementById('typed-text');
-      let i = 0;
+      let idx = 0;
       function typeWriter() {
-        if (i < headlineText.length) {
-          typedSpan.textContent += headlineText.charAt(i);
-          i++;
+        if (idx < headlineText.length) {
+          typedSpan.textContent += headlineText.charAt(idx);
+          idx++;
           setTimeout(typeWriter, 70);
         }
       }
       typeWriter();
 
-      // Dark/Light toggle: pure Sun/Moon
+      // Dark/Light Mode
       const toggleBtn = document.getElementById('themeToggle');
       const body = document.body;
       const toggleIcon = toggleBtn.querySelector('i');
-      
       function setTheme(theme) {
         if (theme === 'light') {
           body.classList.add('light');
@@ -589,187 +718,169 @@
           toggleIcon.className = 'fas fa-sun';
         }
       }
-      
       const savedTheme = localStorage.getItem('theme') || 'dark';
-      if (savedTheme === 'light') setTheme('light');
-      else setTheme('dark');
-      
+      setTheme(savedTheme);
       toggleBtn.addEventListener('click', () => {
         if (body.classList.contains('light')) setTheme('dark');
         else setTheme('light');
       });
 
-      // Intersection Observer for sections & animations
+      // Animations Observer
       const sections = document.querySelectorAll('section');
-      const introImgDiv = document.getElementById('introImg');
-      const introTextDiv = document.getElementById('introText');
+      const introImg = document.getElementById('introImg');
+      const introText = document.getElementById('introText');
       const timelineItems = document.querySelectorAll('.timeline-item');
       const skillCards = document.querySelectorAll('.skill-card');
-      
-      // Section blur transition (previous sections blur when scrolling)
-      function applyBlurTransition(visibleIndex) {
-        const sectionsArray = Array.from(sections);
-        sectionsArray.forEach((sec, idx) => {
-          if (idx < visibleIndex) {
-            sec.style.transition = 'filter 0.3s';
-            sec.style.filter = 'blur(3px)';
-          } else {
-            sec.style.filter = 'blur(0px)';
-          }
+
+      function applyBlur(visibleIndex) {
+        Array.from(sections).forEach((sec, i) => {
+          sec.style.transition = 'filter 0.3s';
+          sec.style.filter = i < visibleIndex ? 'blur(3px)' : 'blur(0px)';
         });
       }
-      
       const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const section = entry.target;
-            section.classList.add('visible');
-            const sectionsList = Array.from(sections);
-            const idx = sectionsList.indexOf(section);
-            if (idx !== -1) applyBlurTransition(idx);
+            entry.target.classList.add('visible');
+            const idx = Array.from(sections).indexOf(entry.target);
+            if (idx !== -1) applyBlur(idx);
           }
         });
       }, { threshold: 0.3 });
-      
       sections.forEach(sec => sectionObserver.observe(sec));
-      
-      // Intro image + text observer (blur to sharp + slide)
-      const animateElementsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible-animate');
-          }
-        });
+
+      const appearObserver = new IntersectionObserver((entries) => {
+        entries.forEach(e => e.isIntersecting && e.target.classList.add('visible-animate'));
       }, { threshold: 0.2 });
-      
-      if (introImgDiv) animateElementsObserver.observe(introImgDiv);
-      if (introTextDiv) animateElementsObserver.observe(introTextDiv);
-      
-      // Timeline items stagger & logo effect
-      const timelineObserver = new IntersectionObserver((entries) => {
+      if (introImg) appearObserver.observe(introImg);
+      if (introText) appearObserver.observe(introText);
+
+      const timelineObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => e.isIntersecting && e.target.classList.add('visible-item'));
+      }, { threshold: 0.3 });
+      timelineItems.forEach(item => timelineObs.observe(item));
+
+      const skillObs = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('visible-item');
-          }
-        });
-      }, { threshold: 0.3 });
-      
-      timelineItems.forEach(item => timelineObserver.observe(item));
-      
-      // skill cards staggered + soft light appearance
-      const skillObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const allSkills = Array.from(skillCards);
-            const index = allSkills.indexOf(entry.target);
-            setTimeout(() => {
-              entry.target.classList.add('visible-skill');
-            }, index * 120);
-            skillObserver.unobserve(entry.target);
+            const all = Array.from(skillCards);
+            const index = all.indexOf(entry.target);
+            setTimeout(() => entry.target.classList.add('visible-skill'), index * 100);
+            skillObs.unobserve(entry.target);
           }
         });
       }, { threshold: 0.4 });
-      
-      skillCards.forEach(card => skillObserver.observe(card));
-      
-      // initial manual check for already visible elements
+      skillCards.forEach(card => skillObs.observe(card));
+
       setTimeout(() => {
-        if (introImgDiv && introImgDiv.getBoundingClientRect().top < window.innerHeight) introImgDiv.classList.add('visible-animate');
-        if (introTextDiv && introTextDiv.getBoundingClientRect().top < window.innerHeight) introTextDiv.classList.add('visible-animate');
-        timelineItems.forEach(item => {
-          if (item.getBoundingClientRect().top < window.innerHeight) item.classList.add('visible-item');
-        });
-        skillCards.forEach((card, idx) => {
-          if (card.getBoundingClientRect().top < window.innerHeight) {
-            setTimeout(() => card.classList.add('visible-skill'), idx * 120);
-          }
-        });
+        if (introImg && introImg.getBoundingClientRect().top < innerHeight) introImg.classList.add('visible-animate');
+        if (introText && introText.getBoundingClientRect().top < innerHeight) introText.classList.add('visible-animate');
+        timelineItems.forEach(item => { if (item.getBoundingClientRect().top < innerHeight) item.classList.add('visible-item'); });
+        skillCards.forEach((card, i) => { if (card.getBoundingClientRect().top < innerHeight) setTimeout(() => card.classList.add('visible-skill'), i * 100); });
       }, 200);
-      
-      // Project button: open new tab
-      const projBtn = document.getElementById('projectBtn');
-      if (projBtn) {
-        projBtn.addEventListener('click', () => {
-          window.open('https://mdsabbirahmed7510.github.io/My-projects', '_blank', 'noopener,noreferrer');
+
+      // Project button
+      document.getElementById('projectBtn')?.addEventListener('click', () => {
+        window.open('https://mdsabbirahmed7510.github.io/My-projects', '_blank');
+      });
+
+      // ========== GMAIL FUNCTION - DIRECT AND WORKING ==========
+      function openGmail() {
+        window.open('https://mail.google.com/mail/?view=cm&fs=1&to=sabbir2682005@gmail.com', '_blank');
+      }
+
+      // Gmail button in sidebar
+      const gmailSocialBtn = document.getElementById('gmailSocialBtn');
+      if (gmailSocialBtn) {
+        gmailSocialBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          openGmail();
         });
       }
 
-      // Reduce motion if preferred
-      const motionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
-      if (motionMedia.matches) {
-        const style = document.createElement('style');
-        style.textContent = `*, .skill-card, .timeline-item, .intro-img, .intro-text { transition-duration: 0.01s !important; animation-duration: 0.01s !important; } .cursor { animation: none !important; }`;
-        document.head.appendChild(style);
+      // Bottom email link
+      const bottomEmailLink = document.getElementById('bottomEmailLink');
+      if (bottomEmailLink) {
+        bottomEmailLink.addEventListener('click', function(e) {
+          e.preventDefault();
+          openGmail();
+        });
       }
-      
-      // Background gradient and dynamic
-      document.body.style.background = `var(--bg-primary)`;
-      const heroDiv = document.querySelector('.hero');
-      if (heroDiv) {
-        heroDiv.style.background = `radial-gradient(circle at 20% 30%, rgba(59,130,246,0.08), transparent 80%)`;
+
+      // ========== CV DOWNLOAD ==========
+      const topDownloadBtn = document.getElementById('topDownloadCvBtn');
+      const modal = document.getElementById('cvModal');
+      const confirmBtn = document.getElementById('confirmDownloadBtn');
+      const cancelBtn = document.getElementById('cancelDownloadBtn');
+      let clickCount = 0;
+
+      function downloadCV() {
+        const link = document.createElement('a');
+        link.href = 'cv-sabbir-ahmed.pdf';
+        link.download = 'CV_Sabbir_Ahmed.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        clickCount++;
+        console.log(`[CV Download] Click #${clickCount}`);
+        showToast();
       }
-      
+
+      function showToast() {
+        const toast = document.createElement('div');
+        toast.innerText = `✅ CV downloaded (${clickCount} clicks)`;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '20px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.background = body.classList.contains('light') ? '#ffffffdd' : '#1e1e2fdd';
+        toast.style.color = body.classList.contains('light') ? '#0f172a' : '#e2e8f0';
+        toast.style.padding = '10px 20px';
+        toast.style.borderRadius = '40px';
+        toast.style.zIndex = '9999';
+        toast.style.fontSize = '0.9rem';
+        toast.style.backdropFilter = 'blur(10px)';
+        toast.style.border = '1px solid var(--border-light)';
+        toast.style.fontWeight = '500';
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 2000);
+      }
+
+      if (topDownloadBtn) {
+        topDownloadBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const icon = topDownloadBtn.querySelector('i');
+          icon.style.animation = 'bounceIcon 0.4s ease';
+          setTimeout(() => { icon.style.animation = ''; }, 400);
+          modal.classList.add('active');
+        });
+      }
+
+      confirmBtn?.addEventListener('click', () => {
+        downloadCV();
+        modal.classList.remove('active');
+      });
+
+      cancelBtn?.addEventListener('click', () => {
+        modal.classList.remove('active');
+      });
+
+      modal?.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.remove('active');
+      });
+
+      // Background update
       function updateBgStyles() {
-        if (!body.classList.contains('light')) {
-          document.body.style.background = `#0a0a14`;
-        } else {
-          document.body.style.background = `#f5f7fe`;
-        }
+        document.body.style.background = body.classList.contains('light') ? '#f5f7fe' : '#0a0a14';
       }
-      const observerTheme = new MutationObserver(() => updateBgStyles());
-      observerTheme.observe(body, { attributes: true, attributeFilter: ['class'] });
+      const themeObserver = new MutationObserver(updateBgStyles);
+      themeObserver.observe(body, { attributes: true, attributeFilter: ['class'] });
       updateBgStyles();
 
-      // Set initial blur state
-      setTimeout(() => {
-        const firstVisibleSection = Array.from(sections).find(sec => {
-          const rect = sec.getBoundingClientRect();
-          return rect.top < window.innerHeight-100 && rect.bottom > 0;
-        });
-        if(firstVisibleSection) {
-          const idx = Array.from(sections).indexOf(firstVisibleSection);
-          applyBlurTransition(idx);
-        } else {
-          applyBlurTransition(-1);
-        }
-      }, 300);
-
-      // Additional style to make the soft light permanent and pop-up on hover exactly as required
-      // modify skill-card with extra micro-animation on hover (pop-up)
-      const additionalSkillStyle = document.createElement('style');
-      additionalSkillStyle.textContent = `
-        .skill-card {
-          transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.2), box-shadow 0.2s, background 0.2s, border-color 0.15s;
-        }
-        .skill-card:hover {
-          transform: translateY(-5px) scale(1.02);
-          box-shadow: 0 16px 24px -8px rgba(59,130,246,0.4), 0 0 0 2px rgba(59,130,246,0.2);
-          border-color: #3b82f6;
-        }
-        /* grid max 2 items, already set */
-        @media (max-width: 600px) {
-          .skills-grid {
-            grid-template-columns: minmax(200px, 260px);
-            justify-content: center;
-          }
-        }
-        /* soft light default glow */
-        .skill-card {
-          box-shadow: 0 0 4px rgba(59,130,246,0.2), 0 2px 8px rgba(0,0,0,0.1);
-        }
-        body.light .skill-card {
-          box-shadow: 0 0 8px rgba(59,130,246,0.2), 0 2px 5px rgba(0,0,0,0.05);
-        }
-      `;
-      document.head.appendChild(additionalSkillStyle);
-      
-      // ensure image fallback if sabbir-pic.jpg missing shows subtle text
+      // Image fallback
       const profileImg = document.querySelector('.intro-img img');
       if (profileImg) {
-        profileImg.onerror = function() {
-          this.onerror = null;
-          this.src = 'https://placehold.co/400x400/1e293b/3b82f6?text=MD.Sabbir';
-        };
+        profileImg.onerror = () => { profileImg.src = 'https://placehold.co/400x400/1e293b/3b82f6?text=MD.Sabbir'; };
       }
     })();
   </script>
