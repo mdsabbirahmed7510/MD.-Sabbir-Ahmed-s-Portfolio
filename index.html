@@ -60,16 +60,28 @@
       padding: 2rem 2rem;
     }
 
+    /* Fix spacing between sections - increased margin to avoid overlapping blur effect */
     section {
-      margin: 5rem 0;
+      margin: 6rem 0;
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1), transform 0.6s ease;
+      scroll-margin-top: 2rem;
     }
 
     section.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    /* Make sure sections have enough spacing on mobile */
+    @media (max-width: 768px) {
+      section {
+        margin: 4rem 0;
+      }
+      .container {
+        padding: 1rem 1.2rem;
+      }
     }
 
     .hero {
@@ -97,11 +109,6 @@
       display: inline-block;
     }
 
-    /* Enhanced cursor: exactly after the text, blinking */
-    .typewriter-wrapper {
-      display: inline-block;
-      position: relative;
-    }
     .cursor {
       display: inline-block;
       width: 3px;
@@ -116,28 +123,23 @@
       50% { opacity: 0; }
     }
 
+    /* Subtitle - improved readability in both themes */
     .subtitle {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
-      color: var(--text-secondary);
       margin-top: 1rem;
       opacity: 0;
       animation: fadeInUp 0.8s forwards;
       animation-delay: 1.4s;
-      /* Improved readability: slightly softer but still visible in both themes */
-      text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      font-weight: 500;
       background: transparent;
-      font-weight: 500;
+      /* Light and dark mode compatible color */
+      color: #6c7a91;
     }
-    /* Light mode adjustments for subtitle */
     body.light .subtitle {
-      color: #1e2a3e;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.05);
-      font-weight: 500;
+      color: #4a5568;
     }
-    /* Dark mode readability */
     body:not(.light) .subtitle {
-      color: #d1d5f0;
-      font-weight: 400;
+      color: #a0aec0;
     }
 
     @keyframes fadeInUp {
@@ -159,14 +161,13 @@
       justify-content: center;
     }
 
-    /* Image container with gentle zoom animation + soft glow, no blur issues */
+    /* Image container with soft light glow + gentle zoom animation - NO BLUR */
     .intro-img {
       flex: 1;
       min-width: 240px;
       opacity: 0;
       transform: translateX(-40px);
       transition: all 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      filter: none; /* No blur at all */
       position: relative;
       border-radius: 2rem;
     }
@@ -176,64 +177,88 @@
       transform: translateX(0);
     }
 
-    /* image wrapper to control glow + gentle infinite zoom in/out */
+    /* Glowing wrapper with soft light color (blue-ish glow) */
     .img-glow-wrapper {
-      position: relative;
-      border-radius: 2rem;
-      padding: 6px;
-      background: radial-gradient(circle at 30% 20%, rgba(59,130,246,0.25), rgba(59,130,246,0.05));
-      transition: all 0.4s ease;
-    }
-    .intro-img img {
-      width: 100%;
-      max-width: 280px;
-      border-radius: 1.8rem;
-      box-shadow: var(--shadow);
-      border: 2px solid var(--border-light);
-      object-fit: cover;
-      aspect-ratio: 1 / 1;
-      display: block;
-      margin: 0 auto;
-      transition: transform 1.2s ease-in-out, box-shadow 0.4s ease;
-      animation: gentleZoom 5s infinite alternate ease-in-out;
-      transform-origin: center;
-    }
-    /* Gentle zoom keyframes: slight zoom in/out without any blur */
-    @keyframes gentleZoom {
-      0% {
-        transform: scale(1);
-      }
-      100% {
-        transform: scale(1.04);
-      }
-    }
-    /* Soft light around image based on theme */
-    .intro-img .img-glow-wrapper {
       position: relative;
       display: inline-block;
       width: 100%;
       max-width: 292px;
       margin: 0 auto;
+      border-radius: 2rem;
     }
+    
+    /* Main soft light effect: outer glowing border that works in both modes */
     .img-glow-wrapper::before {
       content: '';
       position: absolute;
-      inset: -6px;
-      background: radial-gradient(circle, rgba(59,130,246,0.35), transparent 70%);
-      border-radius: 2rem;
-      opacity: 0.7;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      background: radial-gradient(circle at 30% 40%, rgba(59,130,246,0.45), rgba(59,130,246,0.1) 70%);
+      border-radius: 2.2rem;
       z-index: -1;
-      transition: opacity 0.3s;
+      opacity: 0.8;
+      transition: opacity 0.4s ease;
+      filter: blur(5px);
     }
+    
+    /* Additional inner subtle glow */
+    .img-glow-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 1.8rem;
+      background: radial-gradient(circle at 30% 30%, rgba(59,130,246,0.2), transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    
     body.light .img-glow-wrapper::before {
-      background: radial-gradient(circle, rgba(59,130,246,0.5), rgba(59,130,246,0.15));
-      opacity: 0.85;
+      background: radial-gradient(circle at 30% 40%, rgba(59,130,246,0.55), rgba(59,130,246,0.2) 70%);
+      filter: blur(6px);
+      opacity: 0.9;
     }
-    /* extra hover effect fine */
+    
+    .intro-img img {
+      width: 100%;
+      max-width: 280px;
+      border-radius: 1.8rem;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.4);
+      border: 2px solid var(--border-light);
+      object-fit: cover;
+      aspect-ratio: 1 / 1;
+      display: block;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      /* Gentle zoom in/out animation */
+      animation: gentleZoom 5s infinite alternate ease-in-out;
+      transform-origin: center;
+      transition: transform 0.3s ease-out, box-shadow 0.3s ease;
+    }
+    
+    /* Gentle zoom keyframes - smooth scale without any blur */
+    @keyframes gentleZoom {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(1.045);
+      }
+    }
+    
+    /* Pause zoom on hover for better UX, slight extra scale */
     .intro-img:hover img {
       animation-play-state: paused;
       transform: scale(1.02);
       transition: transform 0.4s ease;
+    }
+    
+    /* Optional shine on hover for glow enhancement */
+    .intro-img:hover .img-glow-wrapper::before {
+      opacity: 1;
+      background: radial-gradient(circle at 30% 40%, rgba(59,130,246,0.65), rgba(59,130,246,0.2) 70%);
     }
 
     .intro-text {
@@ -241,7 +266,6 @@
       opacity: 0;
       transform: translateX(40px);
       transition: all 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-      filter: none; /* no blur */
     }
     .intro-text.visible-animate {
       opacity: 1;
@@ -301,7 +325,7 @@
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(220px, 280px));
-      gap: 1.5rem;
+      gap: 1.8rem;
       margin-top: 2rem;
       justify-content: center;
     }
@@ -337,7 +361,7 @@
     @media (max-width: 560px) {
       .skills-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 1.2rem;
       }
       .skill-card {
         max-width: 280px;
@@ -627,13 +651,6 @@
         gap: 1.2rem;
         animation: fadeInUp 0.6s forwards;
       }
-      .container {
-        padding: 1rem 1.2rem;
-      }
-      .intro-row {
-        flex-direction: column;
-        text-align: center;
-      }
       .timeline {
         padding-left: 1rem;
       }
@@ -648,9 +665,6 @@
         padding: 0.5rem 1rem;
         font-size: 0.8rem;
       }
-      section {
-        margin: 3rem 0;
-      }
       .buttons-row {
         flex-direction: column;
         align-items: center;
@@ -659,7 +673,7 @@
 
     h2 {
       font-size: 2rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
       background: linear-gradient(to right, var(--text-primary), var(--accent));
       background-clip: text;
       -webkit-background-clip: text;
@@ -689,7 +703,7 @@
 
   <main>
     <div class="hero container">
-      <h1><span id="typed-container"><span id="typed-text"></span><span class="cursor">|</span></span></h1>
+      <h1><span id="typed-text"></span><span class="cursor">|</span></h1>
       <div class="subtitle">Turning Ideas into Digital Reality</div>
     </div>
 
@@ -697,7 +711,7 @@
       <div class="intro-row">
         <div class="intro-img" id="introImg">
           <div class="img-glow-wrapper">
-            <img src="sabbir-pic.jpg" alt="Sabbir Ahmed" style="width: 100%; max-width: 280px; height: auto;">
+            <img src="sabbir-pic.jpg" alt="MD. Sabbir Ahmed" style="width: 100%; max-width: 280px; height: auto;">
           </div>
         </div>
         <div class="intro-text" id="introText">
@@ -761,7 +775,7 @@
 
   <script>
     (function() {
-      // Typing animation - cursor remains exactly at the end after text finishes
+      // Typing animation
       const headlineText = "Welcome to MD. Sabbir Ahmed's Portfolio";
       const typedSpan = document.getElementById('typed-text');
       let idx = 0;
@@ -770,8 +784,7 @@
           typedSpan.textContent += headlineText.charAt(idx);
           idx++;
           setTimeout(typeWriter, 70);
-        } 
-        // When done, cursor remains blinking as it is already in DOM
+        }
       }
       typeWriter();
 
@@ -797,7 +810,7 @@
         else setTheme('light');
       });
 
-      // Animations Observer (no blur transitions)
+      // Animations Observer - No blur problems, smooth interscroller
       const sections = document.querySelectorAll('section');
       const introImg = document.getElementById('introImg');
       const introText = document.getElementById('introText');
@@ -810,7 +823,7 @@
             entry.target.classList.add('visible');
           }
         });
-      }, { threshold: 0.3 });
+      }, { threshold: 0.2 });
       sections.forEach(sec => sectionObserver.observe(sec));
 
       const appearObserver = new IntersectionObserver((entries) => {
@@ -833,14 +846,14 @@
             skillObs.unobserve(entry.target);
           }
         });
-      }, { threshold: 0.4 });
+      }, { threshold: 0.3 });
       skillCards.forEach(card => skillObs.observe(card));
 
       setTimeout(() => {
-        if (introImg && introImg.getBoundingClientRect().top < innerHeight) introImg.classList.add('visible-animate');
-        if (introText && introText.getBoundingClientRect().top < innerHeight) introText.classList.add('visible-animate');
-        timelineItems.forEach(item => { if (item.getBoundingClientRect().top < innerHeight) item.classList.add('visible-item'); });
-        skillCards.forEach((card, i) => { if (card.getBoundingClientRect().top < innerHeight) setTimeout(() => card.classList.add('visible-skill'), i * 100); });
+        if (introImg && introImg.getBoundingClientRect().top < window.innerHeight) introImg.classList.add('visible-animate');
+        if (introText && introText.getBoundingClientRect().top < window.innerHeight) introText.classList.add('visible-animate');
+        timelineItems.forEach(item => { if (item.getBoundingClientRect().top < window.innerHeight) item.classList.add('visible-item'); });
+        skillCards.forEach((card, i) => { if (card.getBoundingClientRect().top < window.innerHeight) setTimeout(() => card.classList.add('visible-skill'), i * 100); });
       }, 200);
 
       // Project button
@@ -848,32 +861,25 @@
         window.open('https://mdsabbirahmed7510.github.io/My-projects', '_blank');
       });
 
-      // Gmail Function
+      // GMAIL
       function openGmail() {
         window.open('https://mail.google.com/mail/?view=cm&fs=1&to=sabbir2682005@gmail.com', '_blank');
       }
       const gmailSocialBtn = document.getElementById('gmailSocialBtn');
       if (gmailSocialBtn) {
-        gmailSocialBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          openGmail();
-        });
+        gmailSocialBtn.addEventListener('click', (e) => { e.preventDefault(); openGmail(); });
       }
       const bottomEmailLink = document.getElementById('bottomEmailLink');
       if (bottomEmailLink) {
-        bottomEmailLink.addEventListener('click', function(e) {
-          e.preventDefault();
-          openGmail();
-        });
+        bottomEmailLink.addEventListener('click', (e) => { e.preventDefault(); openGmail(); });
       }
 
-      // CV Download
+      // CV DOWNLOAD
       const topDownloadBtn = document.getElementById('topDownloadCvBtn');
       const modal = document.getElementById('cvModal');
       const confirmBtn = document.getElementById('confirmDownloadBtn');
       const cancelBtn = document.getElementById('cancelDownloadBtn');
       let clickCount = 0;
-
       function downloadCV() {
         const link = document.createElement('a');
         link.href = 'cv-sabbir-ahmed.pdf';
@@ -882,10 +888,6 @@
         link.click();
         document.body.removeChild(link);
         clickCount++;
-        showToast();
-      }
-
-      function showToast() {
         const toast = document.createElement('div');
         toast.innerText = `✅ CV downloaded (${clickCount} clicks)`;
         toast.style.position = 'fixed';
@@ -900,35 +902,20 @@
         toast.style.fontSize = '0.9rem';
         toast.style.backdropFilter = 'blur(10px)';
         toast.style.border = '1px solid var(--border-light)';
-        toast.style.fontWeight = '500';
         document.body.appendChild(toast);
         setTimeout(() => toast.remove(), 2000);
       }
-
       if (topDownloadBtn) {
         topDownloadBtn.addEventListener('click', (e) => {
           e.preventDefault();
-          const icon = topDownloadBtn.querySelector('i');
-          icon.style.animation = 'bounceIcon 0.4s ease';
-          setTimeout(() => { icon.style.animation = ''; }, 400);
           modal.classList.add('active');
         });
       }
+      confirmBtn?.addEventListener('click', () => { downloadCV(); modal.classList.remove('active'); });
+      cancelBtn?.addEventListener('click', () => { modal.classList.remove('active'); });
+      modal?.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
 
-      confirmBtn?.addEventListener('click', () => {
-        downloadCV();
-        modal.classList.remove('active');
-      });
-
-      cancelBtn?.addEventListener('click', () => {
-        modal.classList.remove('active');
-      });
-
-      modal?.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.remove('active');
-      });
-
-      // Image fallback
+      // Image fallback if not exists
       const profileImg = document.querySelector('.intro-img img');
       if (profileImg) {
         profileImg.onerror = () => { profileImg.src = 'https://placehold.co/400x400/1e293b/3b82f6?text=MD.Sabbir'; };
