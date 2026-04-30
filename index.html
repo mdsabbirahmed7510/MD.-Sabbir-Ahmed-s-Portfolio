@@ -60,7 +60,6 @@
       padding: 2rem 2rem;
     }
 
-    /* Fix spacing between sections - increased margin to avoid overlapping blur effect */
     section {
       margin: 6rem 0;
       opacity: 0;
@@ -74,7 +73,6 @@
       transform: translateY(0);
     }
 
-    /* Make sure sections have enough spacing on mobile */
     @media (max-width: 768px) {
       section {
         margin: 4rem 0;
@@ -123,7 +121,6 @@
       50% { opacity: 0; }
     }
 
-    /* Subtitle - improved readability in both themes */
     .subtitle {
       font-size: clamp(1.2rem, 3vw, 1.8rem);
       margin-top: 1rem;
@@ -132,7 +129,6 @@
       animation-delay: 1.4s;
       font-weight: 500;
       background: transparent;
-      /* Light and dark mode compatible color */
       color: #6c7a91;
     }
     body.light .subtitle {
@@ -161,7 +157,6 @@
       justify-content: center;
     }
 
-    /* Image container with soft light glow + gentle zoom animation - NO BLUR */
     .intro-img {
       flex: 1;
       min-width: 240px;
@@ -177,7 +172,6 @@
       transform: translateX(0);
     }
 
-    /* Glowing wrapper with soft light color (blue-ish glow) */
     .img-glow-wrapper {
       position: relative;
       display: inline-block;
@@ -187,7 +181,6 @@
       border-radius: 2rem;
     }
     
-    /* Main soft light effect: outer glowing border that works in both modes */
     .img-glow-wrapper::before {
       content: '';
       position: absolute;
@@ -203,7 +196,6 @@
       filter: blur(5px);
     }
     
-    /* Additional inner subtle glow */
     .img-glow-wrapper::after {
       content: '';
       position: absolute;
@@ -232,13 +224,12 @@
       margin: 0 auto;
       position: relative;
       z-index: 2;
-      /* Gentle zoom in/out animation */
-      animation: gentleZoom 5s infinite alternate ease-in-out;
+      /* FASTER ZOOM EFFECT - 2.5 seconds (was 5s before) */
+      animation: gentleZoom 2.5s infinite alternate ease-in-out;
       transform-origin: center;
       transition: transform 0.3s ease-out, box-shadow 0.3s ease;
     }
     
-    /* Gentle zoom keyframes - smooth scale without any blur */
     @keyframes gentleZoom {
       0% {
         transform: scale(1);
@@ -248,14 +239,12 @@
       }
     }
     
-    /* Pause zoom on hover for better UX, slight extra scale */
     .intro-img:hover img {
       animation-play-state: paused;
       transform: scale(1.02);
       transition: transform 0.4s ease;
     }
     
-    /* Optional shine on hover for glow enhancement */
     .intro-img:hover .img-glow-wrapper::before {
       opacity: 1;
       background: radial-gradient(circle at 30% 40%, rgba(59,130,246,0.65), rgba(59,130,246,0.2) 70%);
@@ -810,7 +799,7 @@
         else setTheme('light');
       });
 
-      // Animations Observer - No blur problems, smooth interscroller
+      // Animations Observer
       const sections = document.querySelectorAll('section');
       const introImg = document.getElementById('introImg');
       const introText = document.getElementById('introText');
@@ -915,7 +904,7 @@
       cancelBtn?.addEventListener('click', () => { modal.classList.remove('active'); });
       modal?.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('active'); });
 
-      // Image fallback if not exists
+      // Image fallback
       const profileImg = document.querySelector('.intro-img img');
       if (profileImg) {
         profileImg.onerror = () => { profileImg.src = 'https://placehold.co/400x400/1e293b/3b82f6?text=MD.Sabbir'; };
